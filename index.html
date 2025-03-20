@@ -1,133 +1,151 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Semáforo</title>
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres para suportar caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configuração para tornar o site responsivo -->
+    <title>Simulador de Semáforo</title> <!-- Título da página exibido no navegador -->
     <style>
         /* Estiliza o corpo da página */
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #616569; /* Cor de fundo mais sofisticada */
-            font-family: Arial, sans-serif;
-            color: white;
+            display: flex; /* Ativa o uso do Flexbox */
+            flex-direction: column; /* Organiza os elementos em coluna */
+            align-items: center; /* Centraliza os elementos horizontalmente */
+            justify-content: center; /* Centraliza os elementos verticalmente */
+            height: 100vh; /* Define a altura total da tela */
+            background-color: #616569; /* Define uma cor de fundo cinza escuro */
+            font-family: Arial, sans-serif; /* Define a fonte do texto */
+            color: white; /* Define a cor do texto */
         }
 
-        /* Contêiner dos semáforos */
+        /* Contêiner que agrupa os semáforos */
         .traffic-container {
-            display: flex;
+            display: flex; /* Usa Flexbox para organizar os semáforos lado a lado */
             gap: 100px; /* Aumenta o espaço entre os semáforos */
         }
 
         /* Estiliza os semáforos */
         .traffic-light {
-            width: 100px;
-            height: 240px;
-            background-color: #1a1a1a;
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Adiciona sombra para um efeito 3D */
-            border: 3px solid #333;
+            width: 100px; /* Define a largura do semáforo */
+            height: 240px; /* Define a altura do semáforo */
+            background-color: #1a1a1a; /* Define a cor do fundo do semáforo */
+            border-radius: 15px; /* Adiciona cantos arredondados */
+            padding: 20px; /* Adiciona espaçamento interno */
+            display: flex; /* Ativa o uso do Flexbox */
+            flex-direction: column; /* Organiza as luzes em coluna */
+            align-items: center; /* Centraliza as luzes */
+            justify-content: space-between; /* Distribui as luzes uniformemente */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Adiciona sombra para efeito 3D */
+            border: 3px solid #333; /* Adiciona uma borda escura */
         }
 
-        /* Estiliza as luzes */
+        /* Estiliza as luzes do semáforo */
         .light {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: rgb(14, 12, 12);
-            transition: background-color 0.5s ease-in-out; /* Suaviza a transição das luzes */
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 60px; /* Define a largura da luz */
+            height: 60px; /* Define a altura da luz */
+            border-radius: 50%; /* Deixa a luz circular */
+            background-color: rgb(14, 12, 12); /* Define a cor inicial da luz apagada */
+            transition: background-color 0.5s ease-in-out; /* Adiciona um efeito de transição suave na troca de cores */
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Adiciona um efeito de profundidade */
         }
 
         /* Estiliza o temporizador */
         .timer {
-            font-size: 36px;
-            font-weight: bold;
-            margin-top: 20px;
-            background: #2e2f31;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 36px; /* Define o tamanho da fonte */
+            font-weight: bold; /* Deixa o texto em negrito */
+            margin-top: 20px; /* Adiciona espaçamento superior */
+            background: #2e2f31; /* Define a cor do fundo */
+            padding: 10px 20px; /* Adiciona espaçamento interno */
+            border-radius: 10px; /* Adiciona cantos arredondados */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra para um efeito 3D */
         }
     </style>
 </head>
 <body>
+    <!-- Contêiner principal que agrupa os semáforos -->
     <div class="traffic-container">
+        <!-- Semáforo para carros 1 -->
         <div class="traffic-light" id="car1">
-            <div class="light" id="car1-red"></div>
-            <div class="light" id="car1-yellow"></div>
-            <div class="light" id="car1-green"></div>
+            <div class="light" id="car1-red"></div>   <!-- Luz vermelha -->
+            <div class="light" id="car1-yellow"></div> <!-- Luz amarela -->
+            <div class="light" id="car1-green"></div>  <!-- Luz verde -->
         </div>
+
+        <!-- Semáforo para pedestres 1 -->
         <div class="traffic-light" id="pedestrian1">
-            <div class="light" id="ped1-red"></div>
-            <div class="light" id="ped1-green"></div>
+            <div class="light" id="ped1-red"></div>   <!-- Luz vermelha para pedestres -->
+            <div class="light" id="ped1-green"></div> <!-- Luz verde para pedestres -->
         </div>
+
+        <!-- Semáforo para carros 2 -->
         <div class="traffic-light" id="car2">
             <div class="light" id="car2-red"></div>
             <div class="light" id="car2-yellow"></div>
             <div class="light" id="car2-green"></div>
         </div>
+
+        <!-- Semáforo para pedestres 2 -->
         <div class="traffic-light" id="pedestrian2">
             <div class="light" id="ped2-red"></div>
             <div class="light" id="ped2-green"></div>
         </div>
     </div>
 
+    <!-- Temporizador -->
     <div class="timer" id="timer">Tempo: 10s</div>
 
     <script>
         function changeLights() {
+            // Define os estados do semáforo
             const states = [
-                { car: 'red', pedestrian: 'green', duration: 10 },
-                { car: 'yellow', pedestrian: 'red', duration: 5 },
-                { car: 'green', pedestrian: 'red', duration: 15 }
+                { car: 'red', pedestrian: 'green', duration: 10 },  // Carros param, pedestres atravessam (10s)
+                { car: 'yellow', pedestrian: 'red', duration: 5 },   // Carros se preparam para arrancar, pedestres param (5s)
+                { car: 'green', pedestrian: 'red', duration: 15 }    // Carros avançam, pedestres aguardam (15s)
             ];
 
-            let currentState = 0;
-            let timeLeft = states[currentState].duration;
+            let currentState = 0; // Começa no primeiro estado
+            let timeLeft = states[currentState].duration; // Define o tempo inicial
 
             function updateTimer() {
+                // Atualiza o temporizador na tela
                 document.getElementById('timer').textContent = `Tempo: ${timeLeft}s`;
             }
 
             function switchLights() {
+                // Apaga todas as luzes antes de ativar a nova cor
                 document.querySelectorAll('.light').forEach(light => light.style.backgroundColor = 'rgb(80, 80, 80)');
 
-                let state = states[currentState];
+                let state = states[currentState]; // Obtém o estado atual
 
+                // Acende a luz correspondente do semáforo de carros
                 document.getElementById('car1-' + state.car).style.backgroundColor = state.car;
                 document.getElementById('car2-' + state.car).style.backgroundColor = state.car;
+
+                // Acende a luz correspondente do semáforo de pedestres
                 document.getElementById('ped1-' + state.pedestrian).style.backgroundColor = state.pedestrian;
                 document.getElementById('ped2-' + state.pedestrian).style.backgroundColor = state.pedestrian;
 
-                timeLeft = state.duration;
-                updateTimer();
+                timeLeft = state.duration; // Atualiza o tempo restante
+                updateTimer(); // Atualiza o temporizador na tela
 
+                // Inicia a contagem regressiva do temporizador
                 let countdown = setInterval(() => {
-                    timeLeft--;
-                    updateTimer();
-                    if (timeLeft === 0) clearInterval(countdown);
+                    timeLeft--; // Diminui o tempo restante
+                    updateTimer(); // Atualiza o tempo na tela
+
+                    if (timeLeft === 0) clearInterval(countdown); // Para a contagem quando chegar a 0
                 }, 1000);
 
+                // Muda para o próximo estado após o tempo definido
                 setTimeout(() => {
-                    currentState = (currentState + 1) % states.length;
-                    switchLights();
+                    currentState = (currentState + 1) % states.length; // Alterna entre os estados ciclicamente
+                    switchLights(); // Chama a função novamente para o próximo estado
                 }, state.duration * 1000);
             }
 
-            switchLights();
+            switchLights(); // Inicia o ciclo de mudança das luzes
         }
 
-        changeLights();
+        changeLights(); // Chama a função ao carregar a página
     </script>
 </body>
 </html>
