@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Semáforo</title>
+    <style>
+        /* Estiliza o corpo da página */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #616569; /* Cor de fundo mais sofisticada */
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Contêiner dos semáforos */
+        .traffic-container {
+            display: flex;
+            gap: 100px; /* Aumenta o espaço entre os semáforos */
+        }
+
+        /* Estiliza os semáforos */
+        .traffic-light {
+            width: 100px;
+            height: 240px;
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Adiciona sombra para um efeito 3D */
+            border: 3px solid #333;
+        }
+
+        /* Estiliza as luzes */
+        .light {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgb(14, 12, 12);
+            transition: background-color 0.5s ease-in-out; /* Suaviza a transição das luzes */
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estiliza o temporizador */
+        .timer {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 20px;
+            background: #2e2f31;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="traffic-container">
+        <div class="traffic-light" id="car1">
+            <div class="light" id="car1-red"></div>
+            <div class="light" id="car1-yellow"></div>
+            <div class="light" id="car1-green"></div>
+        </div>
+        <div class="traffic-light" id="pedestrian1">
+            <div class="light" id="ped1-red"></div>
+            <div class="light" id="ped1-green"></div>
+        </div>
+        <div class="traffic-light" id="car2">
+            <div class="light" id="car2-red"></div>
+            <div class="light" id="car2-yellow"></div>
+            <div class="light" id="car2-green"></div>
+        </div>
+        <div class="traffic-light" id="pedestrian2">
+            <div class="light" id="ped2-red"></div>
+            <div class="light" id="ped2-green"></div>
+        </div>
+    </div>
+
+    <div class="timer" id="timer">Tempo: 10s</div>
+
+    <script>
+        function changeLights() {
+            const states = [
+                { car: 'red', pedestrian: 'green', duration: 10 },
+                { car: 'yellow', pedestrian: 'red', duration: 5 },
+                { car: 'green', pedestrian: 'red', duration: 15 }
+            ];
+
+            let currentState = 0;
+            let timeLeft = states[currentState].duration;
+
+            function updateTimer() {
+                document.getElementById('timer').textContent = `Tempo: ${timeLeft}s`;
+            }
+
+            function switchLights() {
+                document.querySelectorAll('.light').forEach(light => light.style.backgroundColor = 'rgb(80, 80, 80)');
+
+                let state = states[currentState];
+
+                document.getElementById('car1-' + state.car).style.backgroundColor = state.car;
+                document.getElementById('car2-' + state.car).style.backgroundColor = state.car;
+                document.getElementById('ped1-' + state.pedestrian).style.backgroundColor = state.pedestrian;
+                document.getElementById('ped2-' + state.pedestrian).style.backgroundColor = state.pedestrian;
+
+                timeLeft = state.duration;
+                updateTimer();
+
+                let countdown = setInterval(() => {
+                    timeLeft--;
+                    updateTimer();
+                    if (timeLeft === 0) clearInterval(countdown);
+                }, 1000);
+
+                setTimeout(() => {
+                    currentState = (currentState + 1) % states.length;
+                    switchLights();
+                }, state.duration * 1000);
+            }
+
+            switchLights();
+        }
+
+        changeLights();
+    </script>
+</body>
+</html>
